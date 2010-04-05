@@ -8,7 +8,7 @@
  * class FooController {
  *   function _initialize() {
  *     if($someCondition) {
- *       $this->Dynamic->loadComponets(array('Session', 'Admin'));
+ *       $this->Dynamic->loadComponents(array('Session', 'Admin'));
  *     }
  *   }
  * } 
@@ -20,7 +20,7 @@
  * <code>
  * class AdminComponent {
  *   function initialize($controller, $settings=array()) {
- *     $controller->Dynamic->loadComponets('Auth');
+ *     $controller->Dynamic->loadComponents('Auth');
  *   }
  * } 
  * </code>
@@ -83,14 +83,14 @@ class DynamicComponent extends Object {
      * Tells this component to load $components.
      * Components already loaded are skipped.
      * 
-     * loadComponets('Component')
-     * loadComponets('Component1', 'Component2', .., 'ComponentN')
-     * loadComponets(array('Component1',
+     * loadComponents('Component')
+     * loadComponents('Component1', 'Component2', .., 'ComponentN')
+     * loadComponents(array('Component1',
      *                     'Component2' => array('params')))
      *
      * @param mixed $components
      */
-    public function loadComponets($components) {
+    public function loadComponents($components) {
         if(func_num_args() > 1) {
             $components = func_get_args();
         } else {
