@@ -51,11 +51,20 @@ class DynamicComponent extends Object {
     /**
      * initialize callback
      * 
+     * settings:
+     *   prefix => if true, tries to load {Prefix}Component.
+     * 
      * @param object $controller
-     * @param array $cfg
+     * @param array $settings
      */
-    public function initialize($controller, $cfg=array()) {
+    public function initialize($controller, $settings=array()) {
         $this->_controller = $controller;
+
+        if(!empty($settings['prefix']) &&
+           !empty($controller->params["prefix"])) {
+            $this->_loadPrefixComponent($controller->params["prefix"]);
+        }
+
         if(method_exists($this->_controller, '_initialize')) {
             $this->_callInitializeMethod($this->_controller, '_initialize');
         }
@@ -152,5 +161,20 @@ class DynamicComponent extends Object {
                                              array(&$controller, $settings));
             }
         }
+    }
+
+    /**
+     * Loads a component named $prefix
+     * 
+     * @param string prefix
+     * @return boolean
+     */
+    function _loadPrefixComponent($prefix) {
+        $component = Inflector::camelize($prefix);
+        if(App::import('Component', $component)) {
+            $this->loadComponents($component);
+            return true;
+        }
+        return false;
     }
 }
