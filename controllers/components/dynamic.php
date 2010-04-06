@@ -4,27 +4,6 @@
  * 
  * This component allows you to load components from Controller::_initialize().
  * 
- * <code>
- * class FooController {
- *   function _initialize() {
- *     if($someCondition) {
- *       $this->Dynamic->loadComponents(array('Session', 'Admin'));
- *     }
- *   }
- * } 
- * </code>
- * 
- * And the components loaded by this way can also load other components
- * within their initialize callback.
- *
- * <code>
- * class AdminComponent {
- *   function initialize($controller, $settings=array()) {
- *     $controller->Dynamic->loadComponents('Auth');
- *   }
- * } 
- * </code>
- * 
  * @copyright Copyright 2010, Takayuki Miwa http://github.com/tkyk/
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  */
@@ -52,7 +31,7 @@ class DynamicComponent extends Object {
      * initialize callback
      * 
      * settings:
-     *   prefix => if true, tries to load {Prefix}Component.
+     *   prefix => if true, {Prefix}Component will be loaded.
      * 
      * @param object $controller
      * @param array $settings
@@ -95,7 +74,7 @@ class DynamicComponent extends Object {
      * loadComponents('Component')
      * loadComponents('Component1', 'Component2', .., 'ComponentN')
      * loadComponents(array('Component1',
-     *                     'Component2' => array('params')))
+     *                      'Component2' => array('params')))
      *
      * @param mixed $components
      */
