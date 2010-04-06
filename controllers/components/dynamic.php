@@ -132,23 +132,25 @@ class DynamicComponent extends Object {
     }
 
     /**
+     * Calls initialize method of the loaded components.
+     * 
+     * @param object $controller
+     * @param array  $names  component names
      */
-	protected function _initializeComponents($controller, $names) {
+    protected function _initializeComponents($controller, $names) {
         $Loader = $controller->Component;
-		foreach ($names as $name) {
-			$component =& $Loader->_loaded[$name];
-
-			if (method_exists($component,'initialize') && $component->enabled === true) {
-				$settings = array();
-				if (isset($Loader->__settings[$name])) {
-					$settings = $Loader->__settings[$name];
-				}
+        foreach ($names as $name) {
+            $component =& $Loader->_loaded[$name];
+            
+            if (method_exists($component,'initialize') && $component->enabled === true) {
+                $settings = array();
+                if (isset($Loader->__settings[$name])) {
+                    $settings = $Loader->__settings[$name];
+                }
                 $this->_callInitializeMethod($component,
                                              'initialize',
                                              array(&$controller, $settings));
-			}
-		}
-	}
-
-
+            }
+        }
+    }
 }
